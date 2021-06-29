@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ClientCalls;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PortalClient.Models;
@@ -13,19 +14,18 @@ namespace PortalClient.Controllers
 {
     public class DepartmentController : Controller
     {
-        // GET: DepartmentController
+
+        const string BASE_URL = "https://localhost:44308/api/department";
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: DepartmentController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: DepartmentController/Create
         public ActionResult Create()
         {
             return View();
@@ -38,7 +38,7 @@ namespace PortalClient.Controllers
         {
             try
             {
-                GetData(dep);
+                CallManager<Department>.Post(dep, BASE_URL);
                 return View();
             }
             catch
@@ -47,28 +47,11 @@ namespace PortalClient.Controllers
             }
         }
 
-        public async void GetData(Department dep)
-        {
-            string url = "https://localhost:44348/api/department";
-            using (HttpClient client = new HttpClient())
-            {
-                HttpContent reqContent = new StringContent(JsonConvert.SerializeObject(dep), Encoding.UTF8, "application/json");
-                using (HttpResponseMessage res = await client.PostAsync(url, reqContent))
-                {
-                    HttpContent content = res.Content;
-                    var responseJson = await content.ReadAsStringAsync();
-                    Console.WriteLine(responseJson);
-                }
-            }
-        }
-
-        // GET: DepartmentController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: DepartmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -83,13 +66,11 @@ namespace PortalClient.Controllers
             }
         }
 
-        // GET: DepartmentController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: DepartmentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
