@@ -24,8 +24,8 @@ namespace PortalClient.Controllers
             return View();
         }
 
+
         // Post: EmployeeController/Details/
-        [HttpPost]
         public ActionResult Details(int id)
         {
             Employee emp = GetData(id);
@@ -96,6 +96,10 @@ namespace PortalClient.Controllers
             }
         }
 
+        public ActionResult All()
+        {
+            return View(GetAllData());
+        }
 
         #region "Calls"
         public async void PostData(Employee emp)
@@ -123,6 +127,20 @@ namespace PortalClient.Controllers
                     HttpContent content = res.Content;
                     string responseJson = content.ReadAsStringAsync().Result;
                     return JsonConvert.DeserializeObject<Employee>(responseJson);
+                }
+            }
+        }
+
+        public IEnumerable<Employee> GetAllData()
+        {
+            string url = $"https://localhost:44348/api/employee";
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage res = client.GetAsync(url).Result)
+                {
+                    HttpContent content = res.Content;
+                    string responseJson = content.ReadAsStringAsync().Result;
+                    return JsonConvert.DeserializeObject<IEnumerable<Employee>>(responseJson);
                 }
             }
         }

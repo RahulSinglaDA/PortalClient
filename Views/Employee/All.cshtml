@@ -1,0 +1,61 @@
+﻿@model IEnumerable<PortalClient.Models.Employee>
+
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1>All</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeePhone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DepartmentID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class="col-sm-10">
+                @Html.DisplayFor(modelitem => item.EmployeeID)
+            </td>
+            
+            <td class="col-sm-10">
+                @Html.DisplayFor(modelitem => item.EmployeeName)
+            </td>
+            
+            <td class="col-sm-10">
+                @Html.DisplayFor(modelitem => item.EmployeeEmail)
+            </td>
+            
+            <td class="col-sm-10">
+                @Html.DisplayFor(modelitem => item.EmployeePhone)
+            </td>
+            
+            <td class="col-sm-10">
+                @Html.DisplayFor(modelitem => item.DepartmentID)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id=item.EmployeeID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
