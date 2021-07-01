@@ -16,6 +16,7 @@ namespace PortalClient.Controllers
     public class EmployeeController : Controller
     {
         const string BASE_URL = "https://localhost:44366/api/employee";
+        const string BASE_GATEWAY_URL = "https://localhost:44392/";
 
         public ActionResult Index()
         {
@@ -95,7 +96,7 @@ namespace PortalClient.Controllers
 
         public ActionResult All()
         {
-            return View(CallManager<IEnumerable<Employee>>.Get(BASE_URL));
+            return View(CallManager<IEnumerable<Employee>>.Get(BASE_GATEWAY_URL + "employeedetails"));
         }
 
     }
